@@ -183,7 +183,7 @@ export default function AddTransactionPage() {
                     {/* Entity Name */}
                     <div className="space-y-2">
                         <Label htmlFor="entityName" className="text-[#1B2559] font-bold">
-                            {type === 'Income' ? 'Nom Tx' : 'Vendor / Service'}
+                            {type === 'Income' ? 'Nom Tx' : 'Nom dépense'}
                         </Label>
                         <Input
                             id="entityName"
