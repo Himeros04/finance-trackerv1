@@ -3,6 +3,8 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { DataProvider } from "@/context/DataContext";
 import { createClient } from "@/utils/supabase/server";
 
+import { SwipeableLayout } from "@/components/layout/SwipeableLayout";
+
 export default async function MainLayout({
     children,
 }: Readonly<{
@@ -17,11 +19,9 @@ export default async function MainLayout({
                 <Sidebar userEmail={user?.email} />
                 <div className="flex-1 flex flex-col h-full relative overflow-hidden">
                     <MobileNav userEmail={user?.email} />
-                    <div className="flex-1 overflow-y-auto overflow-x-hidden">
-                        <main className="min-h-full p-4 md:p-8 lg:p-10">
-                            {children}
-                        </main>
-                    </div>
+                    <SwipeableLayout>
+                        {children}
+                    </SwipeableLayout>
                 </div>
             </div>
         </DataProvider>
