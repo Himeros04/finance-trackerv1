@@ -1,7 +1,10 @@
 import { login, signup } from '@/actions/auth'
 import Image from 'next/image';
+import { Suspense } from 'react';
 
-export default function LoginPage() {
+function LoginForm({ searchParams }: { searchParams: { error?: string } }) {
+    const error = searchParams?.error;
+
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -23,6 +26,11 @@ export default function LoginPage() {
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
                     <form className="space-y-6">
+                        {error && (
+                            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+                                {error}
+                            </div>
+                        )}
                         <div>
                             <label
                                 htmlFor="email"
@@ -80,4 +88,12 @@ export default function LoginPage() {
             </div>
         </div>
     )
+}
+
+export default function LoginPage({ searchParams }: { searchParams: { error?: string } }) {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LoginForm searchParams={searchParams} />
+        </Suspense>
+    );
 }
