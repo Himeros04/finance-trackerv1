@@ -1,18 +1,26 @@
 "use client";
 
 import React, { useState } from 'react';
-
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useData } from "@/context/DataContext";
 
-export function IncomeDistributionChart() {
+interface IncomeDistributionChartProps {
+    selectedMonth: string;
+}
+
+export function IncomeDistributionChart({ selectedMonth }: IncomeDistributionChartProps) {
     const { transactions, budgetGoals } = useData();
 
     // Calculate total income per category
     const categoryTotals: Record<string, number> = {};
     let totalIncome = 0;
 
-    transactions.filter(t => t.type === 'Income').forEach(t => {
+    transactions.filter(t => {
+        if (t.type !== 'Income') return false;
+        const date = new Date(t.date);
+        const month = date.toLocaleString('en-US', { month: 'long' });
+        return month === selectedMonth;
+    }).forEach(t => {
         categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.amount;
         totalIncome += t.amount;
     });

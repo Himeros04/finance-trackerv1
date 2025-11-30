@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Plus, CheckCircle } from "lucide-react";
 import { getCategories, getTags, addTransaction, addTag } from "@/actions/data";
 import { Category, Tag } from "@/types";
 import {
@@ -26,6 +26,7 @@ export default function AddTransactionPage() {
     const initialType = searchParams.get('type') === 'expense' ? 'Expense' : 'Income';
     const [type, setType] = useState<'Income' | 'Expense'>(initialType);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     // Data state
     const [allCategories, setAllCategories] = useState<Category[]>([]);
@@ -96,8 +97,21 @@ export default function AddTransactionPage() {
             await addTransaction(data);
             await refreshData();
 
-            // Success - redirect to transactions page (or dashboard)
-            router.push('/');
+            // Show success message
+            setShowSuccess(true);
+
+            // Reset form but keep date and type
+            setFormData(prev => ({
+                ...prev,
+                entityName: '',
+                category: '',
+                tag: '',
+                amount: '',
+                status: type === 'Income' ? 'To bill' : 'To pay'
+            }));
+
+            // Hide success message after 3 seconds
+            setTimeout(() => setShowSuccess(false), 3000);
         } catch (error) {
             console.error('Error adding transaction:', error);
             alert('Error adding transaction. Please try again.');
@@ -141,6 +155,14 @@ export default function AddTransactionPage() {
                 </Button>
                 <h1 className="text-3xl font-bold text-[#1B2559]">Add Transaction</h1>
             </div>
+
+            {/* Success Message */}
+            {showSuccess && (
+                <div className="bg-green-50 text-green-700 p-4 rounded-xl flex items-center gap-3 border border-green-200 animate-in fade-in slide-in-from-top-2">
+                    <CheckCircle className="h-5 w-5" />
+                    <span className="font-medium">Transaction added successfully! You can add another one.</span>
+                </div>
+            )}
 
             {/* Transaction Type Toggle */}
             <div className="bg-white rounded-[2rem] p-2 inline-flex gap-2">
