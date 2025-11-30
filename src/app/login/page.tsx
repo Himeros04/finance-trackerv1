@@ -106,10 +106,11 @@ function LoginForm({ searchParams }: { searchParams: { error?: string } }) {
     )
 }
 
-export default function LoginPage({ searchParams }: { searchParams: { error?: string } }) {
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+    const { error } = await searchParams;
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <LoginForm searchParams={searchParams} />
+            <LoginForm searchParams={{ error }} />
         </Suspense>
     );
 }
