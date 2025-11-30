@@ -20,7 +20,6 @@ export async function login(formData: FormData) {
         redirect('/login?error=' + encodeURIComponent(error.message))
     }
 
-    console.log('Login successful, redirecting to /')
     revalidatePath('/', 'layout')
     redirect('/')
 }
@@ -41,7 +40,6 @@ export async function signup(formData: FormData) {
         redirect('/login?error=' + encodeURIComponent(error.message))
     }
 
-    console.log('Signup successful, redirecting to /')
     revalidatePath('/', 'layout')
     redirect('/')
 }
