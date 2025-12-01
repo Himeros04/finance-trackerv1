@@ -90,7 +90,7 @@ export async function addTransaction(formData: FormData) {
         tag: formData.get('tag') || null, // Handle optional tag
         status: formData.get('status'),
         amount: formData.get('amount'),
-        amount: formData.get('amount'),
+
         type: formData.get('type'),
     }
 
