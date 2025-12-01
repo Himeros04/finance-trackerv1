@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Plus, CheckCircle } from "lucide-react";
 import { getCategories, getTags, addTransaction, addTag } from "@/actions/data";
+import { Switch } from "@/components/ui/switch";
 import { Category, Tag } from "@/types";
 import {
     Dialog,
@@ -47,6 +48,9 @@ export default function AddTransactionPage() {
         status: 'To bill',
         amount: ''
     });
+
+    const [isRecurring, setIsRecurring] = useState(false);
+    const [frequency, setFrequency] = useState<'Monthly' | 'Yearly' | 'Weekly'>('Monthly');
 
     const incomeStatuses = ['To bill', 'Billed', 'Received'];
     const expenseStatuses = ['To pay', 'Paid'];
@@ -93,6 +97,10 @@ export default function AddTransactionPage() {
             data.append('status', formData.status);
             data.append('amount', formData.amount);
             data.append('type', type);
+            data.append('isRecurring', String(isRecurring));
+            if (isRecurring) {
+                data.append('frequency', frequency);
+            }
 
             await addTransaction(data);
             await refreshData();
@@ -109,6 +117,8 @@ export default function AddTransactionPage() {
                 amount: '',
                 status: type === 'Income' ? 'To bill' : 'To pay'
             }));
+            setIsRecurring(false);
+            setFrequency('Monthly');
 
             // Hide success message after 3 seconds
             setTimeout(() => setShowSuccess(false), 3000);
@@ -322,6 +332,36 @@ export default function AddTransactionPage() {
                             className="bg-[#F4F7FE] border-none rounded-xl py-6 text-2xl font-bold"
                             required
                         />
+                    </div>
+
+                    {/* Recurring Option */}
+                    <div className="space-y-4 pt-2 border-t border-gray-100">
+                        <div className="flex items-center justify-between">
+                            <div className="space-y-0.5">
+                                <Label className="text-[#1B2559] font-bold text-base">Recurring Transaction</Label>
+                                <p className="text-sm text-gray-500">Automatically generate this transaction</p>
+                            </div>
+                            <Switch
+                                checked={isRecurring}
+                                onCheckedChange={setIsRecurring}
+                            />
+                        </div>
+
+                        {isRecurring && (
+                            <div className="space-y-2 animate-in fade-in slide-in-from-top-2">
+                                <Label htmlFor="frequency" className="text-[#1B2559] font-bold">Frequency</Label>
+                                <select
+                                    id="frequency"
+                                    value={frequency}
+                                    onChange={(e) => setFrequency(e.target.value as any)}
+                                    className="w-full bg-[#F4F7FE] border-none rounded-xl py-4 px-4 text-[#1B2559] font-medium"
+                                >
+                                    <option value="Weekly">Weekly</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Yearly">Yearly</option>
+                                </select>
+                            </div>
+                        )}
                     </div>
 
                     {/* Actions */}

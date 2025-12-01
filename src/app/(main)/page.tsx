@@ -21,14 +21,14 @@ export default async function Dashboard() {
           </div>
           <input
             type="text"
-            className="block w-full pl-10 pr-3 py-3 border-none rounded-full leading-5 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 sm:text-sm shadow-sm"
+            className="block w-full pl-10 pr-3 py-3 border-none rounded-full leading-5 bg-card text-foreground placeholder-muted-foreground focus:outline-none focus:ring-0 sm:text-sm shadow-sm"
             placeholder="Search for a transaction"
           />
         </div>
-        <h1 className="text-2xl font-bold text-[#1B2559] md:hidden">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-foreground md:hidden">Dashboard</h1>
       </div>
 
-      <h1 className="text-3xl font-bold text-[#1B2559] mb-6 hidden md:block">Dashboard</h1>
+      <h1 className="text-3xl font-bold text-foreground mb-6 hidden md:block">Dashboard</h1>
 
       {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

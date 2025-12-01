@@ -90,8 +90,12 @@ export async function addTransaction(formData: FormData) {
         tag: formData.get('tag') || null, // Handle optional tag
         status: formData.get('status'),
         amount: formData.get('amount'),
+        amount: formData.get('amount'),
         type: formData.get('type'),
     }
+
+    const isRecurring = formData.get('isRecurring') === 'true';
+    const frequency = formData.get('frequency') as 'Monthly' | 'Yearly' | 'Weekly';
 
     // Get current user
     const { data: { user } } = await supabase.auth.getUser()
@@ -108,6 +112,38 @@ export async function addTransaction(formData: FormData) {
     if (error) {
         console.error('Error adding transaction:', error)
         throw new Error('Failed to add transaction')
+    }
+
+    // Handle Recurring Transaction
+    if (isRecurring && frequency) {
+        const startDate = new Date(rawFormData.date as string);
+        let nextRunDate = new Date(startDate);
+
+        if (frequency === 'Monthly') {
+            nextRunDate.setMonth(nextRunDate.getMonth() + 1);
+        } else if (frequency === 'Yearly') {
+            nextRunDate.setFullYear(nextRunDate.getFullYear() + 1);
+        } else if (frequency === 'Weekly') {
+            nextRunDate.setDate(nextRunDate.getDate() + 7);
+        }
+
+        const { error: recurringError } = await supabase.from('recurring_transactions').insert({
+            user_id: user.id,
+            amount: rawFormData.amount,
+            category: rawFormData.category,
+            entity_name: rawFormData.entity_name,
+            type: rawFormData.type,
+            frequency: frequency,
+            start_date: rawFormData.date,
+            next_run_date: nextRunDate.toISOString().split('T')[0],
+            active: true
+        });
+
+        if (recurringError) {
+            console.error('Error adding recurring transaction:', recurringError);
+            // We don't throw here to avoid rolling back the main transaction, 
+            // but in a real app we might want a transaction block.
+        }
     }
 
     revalidatePath('/')
@@ -493,5 +529,92 @@ export async function deleteTransaction(id: string) {
 
     revalidatePath('/')
     revalidatePath('/transactions')
+    return { success: true }
+}
+
+export async function getDueRecurringTransactions() {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+
+    const today = new Date().toISOString().split('T')[0]
+
+    const { data, error } = await supabase
+        .from('recurring_transactions')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('active', true)
+        .lte('next_run_date', today)
+
+    if (error) {
+        console.error('Error fetching due recurring transactions:', error)
+        return []
+    }
+
+    return data
+}
+
+export async function processRecurringTransaction(id: string) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) throw new Error('User not authenticated')
+
+    // Get the recurring transaction
+    const { data: recurring, error: fetchError } = await supabase
+        .from('recurring_transactions')
+        .select('*')
+        .eq('id', id)
+        .eq('user_id', user.id)
+        .single()
+
+    if (fetchError || !recurring) {
+        throw new Error('Recurring transaction not found')
+    }
+
+    // Insert new transaction
+    const { error: insertError } = await supabase.from('transactions').insert({
+        user_id: user.id,
+        date: recurring.next_run_date, // Use the scheduled date
+        entity_name: recurring.entity_name,
+        category: recurring.category,
+        amount: recurring.amount,
+        type: recurring.type,
+        status: recurring.type === 'Income' ? 'To bill' : 'To pay'
+    })
+
+    if (insertError) {
+        console.error('Error generating transaction:', insertError)
+        throw new Error('Failed to generate transaction')
+    }
+
+    // Calculate next run date
+    const currentRunDate = new Date(recurring.next_run_date)
+    let nextRunDate = new Date(currentRunDate)
+
+    if (recurring.frequency === 'Monthly') {
+        nextRunDate.setMonth(nextRunDate.getMonth() + 1)
+    } else if (recurring.frequency === 'Yearly') {
+        nextRunDate.setFullYear(nextRunDate.getFullYear() + 1)
+    } else if (recurring.frequency === 'Weekly') {
+        nextRunDate.setDate(nextRunDate.getDate() + 7)
+    }
+
+    // Update recurring transaction
+    const { error: updateError } = await supabase
+        .from('recurring_transactions')
+        .update({
+            last_run_date: recurring.next_run_date,
+            next_run_date: nextRunDate.toISOString().split('T')[0]
+        })
+        .eq('id', id)
+
+    if (updateError) {
+        console.error('Error updating recurring transaction:', updateError)
+        throw new Error('Failed to update recurring transaction')
+    }
+
+    revalidatePath('/')
     return { success: true }
 }

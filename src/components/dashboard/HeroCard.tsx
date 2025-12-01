@@ -26,15 +26,15 @@ export function HeroCard({ transactions }: HeroCardProps) {
     const balance = income - expense;
 
     return (
-        <div className="bg-[#C3D5F9] rounded-[2.5rem] p-8 relative overflow-hidden h-full flex flex-col justify-between">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-zinc-900 dark:to-zinc-950 rounded-[2.5rem] p-8 relative overflow-hidden h-full flex flex-col justify-between border border-transparent dark:border-border">
             {/* Background decoration could go here */}
 
             <div className="flex justify-between items-start z-10">
-                <span className="text-[#707EAE] font-medium text-lg">CashFlow - {currentMonth} {currentYear}</span>
+                <span className="text-muted-foreground font-medium text-lg">CashFlow - {currentMonth} {currentYear}</span>
             </div>
 
             <div className="flex flex-col items-center justify-center z-10 my-4">
-                <h1 className="text-5xl font-bold text-[#1B2559] mb-8">€ {balance.toFixed(2)}</h1>
+                <h1 className="text-5xl font-bold text-foreground mb-8">€ {balance.toFixed(2)}</h1>
 
                 <div className="flex gap-12 w-full justify-center">
                     <div className="flex items-center gap-3">
@@ -42,8 +42,8 @@ export function HeroCard({ transactions }: HeroCardProps) {
                             <ArrowUpRight className="w-5 h-5 text-[#05CD99]" />
                         </div>
                         <div>
-                            <p className="text-[#1B2559] font-bold text-lg">€ {income.toFixed(2)}</p>
-                            <p className="text-[#A3AED0] text-xs">Money IN</p>
+                            <p className="text-foreground font-bold text-lg">€ {income.toFixed(2)}</p>
+                            <p className="text-muted-foreground text-xs">Money IN</p>
                         </div>
                     </div>
 
@@ -52,15 +52,15 @@ export function HeroCard({ transactions }: HeroCardProps) {
                             <ArrowDownRight className="w-5 h-5 text-[#E60000]" />
                         </div>
                         <div>
-                            <p className="text-[#1B2559] font-bold text-lg">€ {expense.toFixed(2)}</p>
-                            <p className="text-[#A3AED0] text-xs">Money OUT</p>
+                            <p className="text-foreground font-bold text-lg">€ {expense.toFixed(2)}</p>
+                            <p className="text-muted-foreground text-xs">Money OUT</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="flex justify-end z-10">
-                <span className="font-bold text-[#1B2559] text-xl tracking-widest">VISA</span>
+                <span className="font-bold text-foreground text-xl tracking-widest">VISA</span>
             </div>
         </div>
     );

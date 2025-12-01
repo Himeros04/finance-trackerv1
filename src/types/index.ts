@@ -53,3 +53,17 @@ export interface Tag {
     user_id: string;
     name: string;
 }
+
+export interface RecurringTransaction {
+    id: string;
+    user_id: string;
+    amount: number;
+    category: string;
+    entity_name: string;
+    type: 'Income' | 'Expense';
+    frequency: 'Monthly' | 'Yearly' | 'Weekly';
+    start_date: string;
+    next_run_date: string;
+    last_run_date?: string;
+    active: boolean;
+}

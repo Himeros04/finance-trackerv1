@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { Plus, Trash2, Pencil } from "lucide-react";
+import { Plus, Trash2, Pencil, Repeat } from "lucide-react";
 import { BudgetGoal, ExpenseBudget, Category, Tag } from "@/types";
 import { addTag, deleteTag, deleteCategory } from "@/actions/data";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
+import Link from "next/link";
 
 import { SmartCategoryDialog } from "@/components/categories/SmartCategoryDialog";
 
@@ -90,7 +91,15 @@ export default function SettingsClient({
 
     return (
         <div className="space-y-8">
-            <h1 className="text-3xl font-bold text-[#1B2559]">Settings</h1>
+            <div className="flex justify-between items-center">
+                <h1 className="text-3xl font-bold text-[#1B2559] dark:text-white">Settings</h1>
+                <Link href="/settings/recurring">
+                    <Button className="bg-[#4318FF] hover:bg-[#3311DD] text-white rounded-xl px-6 py-6 font-bold">
+                        <Repeat className="mr-2 h-5 w-5" />
+                        Manage Recurring
+                    </Button>
+                </Link>
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Monthly Income Goals */}

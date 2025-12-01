@@ -44,23 +44,23 @@
 :root {
   --radius: 1.5rem;
   --background: #F4F7FE;
-  --foreground: #171717;
+  --foreground: #1B2559;
   --card: #FFFFFF;
-  --card-foreground: #171717;
+  --card-foreground: #1B2559;
   --popover: #FFFFFF;
-  --popover-foreground: #171717;
+  --popover-foreground: #1B2559;
   --primary: #4318FF;
   --primary-foreground: #FFFFFF;
-  --secondary: #05CD99;
-  --secondary-foreground: #FFFFFF;
-  --muted: #F3F4F6;
-  --muted-foreground: #6B7280;
-  --accent: #FFB547;
-  --accent-foreground: #171717;
+  --secondary: #F4F7FE;
+  --secondary-foreground: #1B2559;
+  --muted: #F4F7FE;
+  --muted-foreground: #A3AED0;
+  --accent: #F4F7FE;
+  --accent-foreground: #1B2559;
   --destructive: #E60000;
   --destructive-foreground: #FFFFFF;
-  --border: #E5E7EB;
-  --input: #E5E7EB;
+  --border: #E0E5F2;
+  --input: #E0E5F2;
   --ring: #4318FF;
   --chart-1: #4318FF;
   --chart-2: #05CD99;
@@ -68,57 +68,66 @@
   --chart-4: #E60000;
   --chart-5: #3B82F6;
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #171717;
+  --sidebar-foreground: #1B2559;
   --sidebar-primary: #4318FF;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #F4F7FE;
   --sidebar-accent-foreground: #4318FF;
-  --sidebar-border: #E5E7EB;
+  --sidebar-border: #E0E5F2;
   --sidebar-ring: #4318FF;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --card: #171717;
-  --card-foreground: #ededed;
-  --popover: #171717;
-  --popover-foreground: #ededed;
+  --background: #09090b;
+  /* Zinc 950 */
+  --foreground: #fafafa;
+  /* Zinc 50 */
+  --card: #18181b;
+  /* Zinc 900 */
+  --card-foreground: #fafafa;
+  --popover: #18181b;
+  --popover-foreground: #fafafa;
   --primary: #4318FF;
+  /* Keep brand color */
   --primary-foreground: #FFFFFF;
-  --secondary: #05CD99;
-  --secondary-foreground: #FFFFFF;
-  --muted: #262626;
-  --muted-foreground: #a3a3a3;
-  --accent: #FFB547;
-  --accent-foreground: #171717;
-  --destructive: #E60000;
-  --destructive-foreground: #FFFFFF;
-  --border: #262626;
-  --input: #262626;
-  --ring: #4318FF;
+  --secondary: #27272a;
+  /* Zinc 800 */
+  --secondary-foreground: #fafafa;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  /* Zinc 400 */
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+  --destructive: #991b1b;
+  /* Red 800 */
+  --destructive-foreground: #fafafa;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #d4d4d8;
   --chart-1: #4318FF;
   --chart-2: #05CD99;
   --chart-3: #FFB547;
   --chart-4: #E60000;
   --chart-5: #3B82F6;
-  --sidebar: #171717;
-  --sidebar-foreground: #ededed;
+  --sidebar: #18181b;
+  --sidebar-foreground: #fafafa;
   --sidebar-primary: #4318FF;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #262626;
-  --sidebar-accent-foreground: #ededed;
-  --sidebar-border: #262626;
-  --sidebar-ring: #4318FF;
+  --sidebar-accent: #27272a;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #27272a;
+  --sidebar-ring: #d4d4d8;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   button {
     cursor: pointer;
   }
@@ -127,9 +136,11 @@
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(156, 163, 175, 0.5);
   border-radius: 20px;

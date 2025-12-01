@@ -3,7 +3,8 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { DataProvider } from "@/context/DataContext";
 import { createClient } from "@/utils/supabase/server";
 
-import { SwipeableLayout } from "@/components/layout/SwipeableLayout";
+
+import { RecurringTransactionChecker } from "@/components/RecurringTransactionChecker";
 
 export default async function MainLayout({
     children,
@@ -15,13 +16,14 @@ export default async function MainLayout({
 
     return (
         <DataProvider>
-            <div className="flex h-screen bg-[#F4F7FE] overflow-hidden">
+            <div className="flex h-screen bg-background overflow-hidden">
                 <Sidebar userEmail={user?.email} />
                 <div className="flex-1 flex flex-col h-full relative overflow-hidden">
                     <MobileNav userEmail={user?.email} />
-                    <SwipeableLayout>
+                    <div className="h-full w-full overflow-y-auto bg-[#F4F7FE] p-4 md:p-8 lg:p-10">
                         {children}
-                    </SwipeableLayout>
+                    </div>
+                    <RecurringTransactionChecker />
                 </div>
             </div>
         </DataProvider>

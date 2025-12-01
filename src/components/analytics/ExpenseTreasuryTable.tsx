@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import { useData } from "@/context/DataContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -12,27 +14,34 @@ interface ExpenseTreasuryTableProps {
 export function ExpenseTreasuryTable({ selectedMonth }: ExpenseTreasuryTableProps) {
     const { transactions } = useData();
 
-    const expenseTransactions = transactions.filter(t => {
-        if (t.type !== 'Expense') return false;
-        const date = new Date(t.date);
-        const month = date.toLocaleString('en-US', { month: 'long' });
-        return month === selectedMonth;
-    });
+    const { expenseTransactions, toPay, paid, total } = React.useMemo(() => {
+        const filtered = transactions.filter(t => {
+            if (t.type !== 'Expense') return false;
+            const date = new Date(t.date);
+            const month = date.toLocaleString('en-US', { month: 'long' });
+            return month === selectedMonth;
+        });
 
-    const toPay = expenseTransactions
-        .filter(t => t.status === 'To pay')
-        .reduce((sum, t) => sum + t.amount, 0);
+        const toPayAmount = filtered
+            .filter(t => t.status === 'To pay')
+            .reduce((sum, t) => sum + t.amount, 0);
 
-    const paid = expenseTransactions
-        .filter(t => t.status === 'Paid')
-        .reduce((sum, t) => sum + t.amount, 0);
+        const paidAmount = filtered
+            .filter(t => t.status === 'Paid')
+            .reduce((sum, t) => sum + t.amount, 0);
 
-    const total = toPay + paid;
+        return {
+            expenseTransactions: filtered,
+            toPay: toPayAmount,
+            paid: paidAmount,
+            total: toPayAmount + paidAmount
+        };
+    }, [transactions, selectedMonth]);
 
     return (
         <Card className="rounded-[20px] border-none shadow-sm">
             <CardHeader>
-                <CardTitle className="text-xl font-bold text-[#1B2559]">Expense Treasury</CardTitle>
+                <CardTitle className="text-xl font-bold text-foreground">Expense Treasury</CardTitle>
             </CardHeader>
             <CardContent>
                 <Table>
@@ -50,10 +59,10 @@ export function ExpenseTreasuryTable({ selectedMonth }: ExpenseTreasuryTableProp
                                     To Pay
                                 </Badge>
                             </TableCell>
-                            <TableCell className="text-right font-bold text-[#1B2559]">
+                            <TableCell className="text-right font-bold text-foreground">
                                 {toPay.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                             </TableCell>
-                            <TableCell className="text-right text-gray-500">
+                            <TableCell className="text-right text-muted-foreground">
                                 {total > 0 ? ((toPay / total) * 100).toFixed(1) : 0}%
                             </TableCell>
                         </TableRow>
@@ -63,16 +72,16 @@ export function ExpenseTreasuryTable({ selectedMonth }: ExpenseTreasuryTableProp
                                     Paid
                                 </Badge>
                             </TableCell>
-                            <TableCell className="text-right font-bold text-[#1B2559]">
+                            <TableCell className="text-right font-bold text-foreground">
                                 {paid.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                             </TableCell>
-                            <TableCell className="text-right text-gray-500">
+                            <TableCell className="text-right text-muted-foreground">
                                 {total > 0 ? ((paid / total) * 100).toFixed(1) : 0}%
                             </TableCell>
                         </TableRow>
                         <TableRow className="border-t-2">
-                            <TableCell className="font-bold text-[#1B2559]">Total</TableCell>
-                            <TableCell className="text-right font-bold text-[#1B2559]">
+                            <TableCell className="font-bold text-foreground">Total</TableCell>
+                            <TableCell className="text-right font-bold text-foreground">
                                 {total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                             </TableCell>
                             <TableCell className="text-right"></TableCell>

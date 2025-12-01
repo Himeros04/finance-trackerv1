@@ -199,18 +199,30 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         refreshData();
     }, [refreshData]);
 
+    const value = React.useMemo(() => ({
+        transactions,
+        budgetGoals,
+        revenueData,
+        cashflowMetrics,
+        categories,
+        tags,
+        expenseBudgets,
+        loading,
+        refreshData
+    }), [
+        transactions,
+        budgetGoals,
+        revenueData,
+        cashflowMetrics,
+        categories,
+        tags,
+        expenseBudgets,
+        loading,
+        refreshData
+    ]);
+
     return (
-        <DataContext.Provider value={{
-            transactions,
-            budgetGoals,
-            revenueData,
-            cashflowMetrics,
-            categories,
-            tags,
-            expenseBudgets,
-            loading,
-            refreshData
-        }}>
+        <DataContext.Provider value={value}>
             {children}
         </DataContext.Provider>
     );
