@@ -45,15 +45,15 @@ export default function AddTransactionPage() {
         entityName: '',
         category: '',
         tag: '',
-        status: 'To bill',
+        status: 'À facturer',
         amount: ''
     });
 
     const [isRecurring, setIsRecurring] = useState(false);
     const [frequency, setFrequency] = useState<'Monthly' | 'Yearly' | 'Weekly'>('Monthly');
 
-    const incomeStatuses = ['To bill', 'Billed', 'Received'];
-    const expenseStatuses = ['To pay', 'Paid'];
+    const incomeStatuses = ['À facturer', 'Facturé', 'Reçu'];
+    const expenseStatuses = ['À payer', 'Payé'];
     const statuses = type === 'Income' ? incomeStatuses : expenseStatuses;
 
     useEffect(() => {
@@ -75,7 +75,7 @@ export default function AddTransactionPage() {
     useEffect(() => {
         setFormData(prev => ({
             ...prev,
-            status: type === 'Income' ? 'To bill' : 'To pay',
+            status: type === 'Income' ? 'À facturer' : 'À payer',
             category: '' // Reset category on type change as options change
         }));
     }, [type]);
@@ -115,7 +115,7 @@ export default function AddTransactionPage() {
                 category: '',
                 tag: '',
                 amount: '',
-                status: type === 'Income' ? 'To bill' : 'To pay'
+                status: type === 'Income' ? 'À facturer' : 'À payer'
             }));
             setIsRecurring(false);
             setFrequency('Monthly');

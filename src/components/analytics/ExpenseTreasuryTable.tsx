@@ -23,7 +23,7 @@ export function ExpenseTreasuryTable({ selectedMonth }: ExpenseTreasuryTableProp
         });
 
         const toPayAmount = filtered
-            .filter(t => t.status === 'To pay')
+            .filter(t => t.status === 'À payer')
             .reduce((sum, t) => sum + t.amount, 0);
 
         const paidAmount = filtered
@@ -56,7 +56,7 @@ export function ExpenseTreasuryTable({ selectedMonth }: ExpenseTreasuryTableProp
                         <TableRow>
                             <TableCell>
                                 <Badge variant="outline" className="bg-red-100 text-red-700 border-red-200 px-3 py-1">
-                                    To Pay
+                                    À payer
                                 </Badge>
                             </TableCell>
                             <TableCell className="text-right font-bold text-foreground">

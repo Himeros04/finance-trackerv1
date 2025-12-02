@@ -82,8 +82,10 @@ export const getColumns = (onEdit: (transaction: Transaction) => void, categoryC
                 let text = "text-gray-800";
 
                 if (status === "Received" || status === "Reçu") { bg = "bg-[#E6FBF5]"; text = "text-[#05CD99]"; }
-                else if (status === "Paid" || status === "Payé") { bg = "bg-[#F4F7FE]"; text = "text-[#A3AED0]"; }
+                else if (status === "Paid" || status === "Payé") { bg = "bg-[#E6FBF5]"; text = "text-[#05CD99]"; }
                 else if (status === "To bill" || status === "À facturer") { bg = "bg-[#FFF6E5]"; text = "text-[#FFB547]"; }
+                else if (status === "To pay" || status === "À payer") { bg = "bg-[#FFF6E5]"; text = "text-[#FFB547]"; }
+                else if (status === "Billed" || status === "Facturé") { bg = "bg-[#EBE6FF]"; text = "text-[#4318FF]"; }
                 else if (status === "Pending") { bg = "bg-[#FFF6E5]"; text = "text-[#FFB547]"; }
 
                 return (

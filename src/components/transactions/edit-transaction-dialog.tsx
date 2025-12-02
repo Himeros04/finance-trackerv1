@@ -55,8 +55,8 @@ export function EditTransactionDialog({ transaction, open, onOpenChange }: EditT
         }
     }, [open, transaction]);
 
-    const incomeStatuses = ['To bill', 'Billed', 'Received'];
-    const expenseStatuses = ['To pay', 'Paid'];
+    const incomeStatuses = ['À facturer', 'Facturé', 'Reçu'];
+    const expenseStatuses = ['À payer', 'Payé'];
     const statuses = formData.type === 'Income' ? incomeStatuses : expenseStatuses;
     const filteredCategories = categories.filter(c => c.type === formData.type);
 
@@ -91,7 +91,7 @@ export function EditTransactionDialog({ transaction, open, onOpenChange }: EditT
                             <Button
                                 type="button"
                                 variant={formData.type === 'Income' ? 'default' : 'outline'}
-                                onClick={() => setFormData(prev => ({ ...prev, type: 'Income', status: 'To bill', category: '' }))}
+                                onClick={() => setFormData(prev => ({ ...prev, type: 'Income', status: 'À facturer', category: '' }))}
                                 className={formData.type === 'Income' ? 'bg-[#4318FF]' : ''}
                             >
                                 Income
@@ -99,7 +99,7 @@ export function EditTransactionDialog({ transaction, open, onOpenChange }: EditT
                             <Button
                                 type="button"
                                 variant={formData.type === 'Expense' ? 'default' : 'outline'}
-                                onClick={() => setFormData(prev => ({ ...prev, type: 'Expense', status: 'To pay', category: '' }))}
+                                onClick={() => setFormData(prev => ({ ...prev, type: 'Expense', status: 'À payer', category: '' }))}
                                 className={formData.type === 'Expense' ? 'bg-[#FF5757]' : ''}
                             >
                                 Expense

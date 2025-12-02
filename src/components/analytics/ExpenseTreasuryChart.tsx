@@ -10,7 +10,7 @@ export function ExpenseTreasuryChart() {
     const expenseTransactions = transactions.filter(t => t.type === 'Expense');
 
     const toPay = expenseTransactions
-        .filter(t => t.status === 'To pay')
+        .filter(t => t.status === 'À payer')
         .reduce((sum, t) => sum + t.amount, 0);
 
     const paid = expenseTransactions
@@ -18,7 +18,7 @@ export function ExpenseTreasuryChart() {
         .reduce((sum, t) => sum + t.amount, 0);
 
     const data = [
-        { name: 'To Pay', amount: toPay, color: '#FF5757' }, // Red for liabilities
+        { name: 'À payer', amount: toPay, color: '#FF5757' }, // Red for liabilities
         { name: 'Paid', amount: paid, color: '#10B981' },   // Green for settled
     ];
 
@@ -55,7 +55,7 @@ export function ExpenseTreasuryChart() {
                 </div>
                 <div className="mt-4 flex justify-between items-center px-4">
                     <div>
-                        <p className="text-sm text-gray-500">Total To Pay</p>
+                        <p className="text-sm text-gray-500">Total À payer</p>
                         <p className="text-2xl font-bold text-[#FF5757]">
                             {toPay.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                         </p>

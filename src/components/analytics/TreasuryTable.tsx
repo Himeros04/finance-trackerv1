@@ -11,7 +11,7 @@ export function TreasuryTable() {
     const incomeTransactions = transactions.filter(t => t.type === 'Income');
 
     const toBill = incomeTransactions
-        .filter(t => t.status === 'To bill')
+        .filter(t => t.status === 'À facturer')
         .reduce((sum, t) => sum + t.amount, 0);
 
     const billed = incomeTransactions
@@ -42,7 +42,7 @@ export function TreasuryTable() {
                         <TableRow>
                             <TableCell>
                                 <Badge variant="outline" className="bg-yellow-100 text-yellow-700 border-yellow-200 px-3 py-1">
-                                    To Bill
+                                    À facturer
                                 </Badge>
                             </TableCell>
                             <TableCell className="text-right font-bold text-[#1B2559]">

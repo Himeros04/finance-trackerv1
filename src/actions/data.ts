@@ -581,7 +581,7 @@ export async function processRecurringTransaction(id: string) {
         category: recurring.category,
         amount: recurring.amount,
         type: recurring.type,
-        status: recurring.type === 'Income' ? 'To bill' : 'To pay'
+        status: recurring.type === 'Income' ? 'À facturer' : 'À payer'
     })
 
     if (insertError) {

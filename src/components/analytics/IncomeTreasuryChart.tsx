@@ -19,7 +19,7 @@ export function IncomeTreasuryChart({ selectedMonth }: IncomeTreasuryChartProps)
     });
 
     const toBill = incomeTransactions
-        .filter(t => t.status === 'To bill')
+        .filter(t => t.status === 'À facturer')
         .reduce((sum, t) => sum + t.amount, 0);
 
     const billed = incomeTransactions
@@ -31,7 +31,7 @@ export function IncomeTreasuryChart({ selectedMonth }: IncomeTreasuryChartProps)
         .reduce((sum, t) => sum + t.amount, 0);
 
     const data = [
-        { name: 'To Bill', amount: toBill, color: '#EAB308' }, // Yellow
+        { name: 'À facturer', amount: toBill, color: '#EAB308' }, // Yellow
         { name: 'Pending', amount: billed, color: '#3B82F6' }, // Blue
         { name: 'Received', amount: received, color: '#22C55E' }, // Green
     ];
