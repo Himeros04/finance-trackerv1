@@ -27,7 +27,7 @@ export function ExpenseTreasuryTable({ selectedMonth }: ExpenseTreasuryTableProp
             .reduce((sum, t) => sum + t.amount, 0);
 
         const paidAmount = filtered
-            .filter(t => t.status === 'Paid')
+            .filter(t => t.status === 'Payé')
             .reduce((sum, t) => sum + t.amount, 0);
 
         return {
@@ -41,21 +41,21 @@ export function ExpenseTreasuryTable({ selectedMonth }: ExpenseTreasuryTableProp
     return (
         <Card className="rounded-[20px] border-none shadow-sm">
             <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground">Expense Treasury</CardTitle>
+                <CardTitle className="text-xl font-bold text-foreground">Trésorerie Dépenses</CardTitle>
             </CardHeader>
             <CardContent>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[200px]">Status</TableHead>
-                            <TableHead className="text-right">Amount</TableHead>
+                            <TableHead className="w-[200px]">Statut</TableHead>
+                            <TableHead className="text-right">Montant</TableHead>
                             <TableHead className="text-right">%</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         <TableRow>
                             <TableCell>
-                                <Badge variant="outline" className="bg-red-100 text-red-700 border-red-200 px-3 py-1">
+                                <Badge className="bg-[#FFF6E5] text-[#FFB547] hover:bg-[#FFF6E5] hover:bg-opacity-80 border-none rounded-full px-4 py-1 shadow-none">
                                     À payer
                                 </Badge>
                             </TableCell>
@@ -68,8 +68,8 @@ export function ExpenseTreasuryTable({ selectedMonth }: ExpenseTreasuryTableProp
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                                <Badge variant="outline" className="bg-green-100 text-green-700 border-green-200 px-3 py-1">
-                                    Paid
+                                <Badge className="bg-[#E6FBF5] text-[#05CD99] hover:bg-[#E6FBF5] hover:bg-opacity-80 border-none rounded-full px-4 py-1 shadow-none">
+                                    Payé
                                 </Badge>
                             </TableCell>
                             <TableCell className="text-right font-bold text-foreground">

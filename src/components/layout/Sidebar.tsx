@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { LayoutDashboard, Layers, BarChart3, Settings, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { signout } from "@/actions/auth";
-import { ThemeToggle } from "@/components/ThemeToggle";
+
 
 import { NAV_ITEMS } from "@/constants/navigation";
 
@@ -61,7 +61,7 @@ export function Sidebar({ userEmail }: SidebarProps) {
             {/* Bottom Actions */}
             <div className="mt-auto space-y-2">
                 <div className="px-4 mb-2">
-                    <ThemeToggle />
+
                 </div>
                 {userEmail && (
                     <div className="px-4 py-2 mb-2">

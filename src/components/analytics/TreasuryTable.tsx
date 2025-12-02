@@ -15,11 +15,11 @@ export function TreasuryTable() {
         .reduce((sum, t) => sum + t.amount, 0);
 
     const billed = incomeTransactions
-        .filter(t => t.status === 'Billed')
+        .filter(t => t.status === 'Facturé')
         .reduce((sum, t) => sum + t.amount, 0);
 
     const received = incomeTransactions
-        .filter(t => t.status === 'Received')
+        .filter(t => t.status === 'Reçu')
         .reduce((sum, t) => sum + t.amount, 0);
 
     const total = toBill + billed + received;
@@ -27,21 +27,21 @@ export function TreasuryTable() {
     return (
         <Card className="rounded-[20px] border-none shadow-sm">
             <CardHeader>
-                <CardTitle className="text-xl font-bold text-[#1B2559]">Income Treasury</CardTitle>
+                <CardTitle className="text-xl font-bold text-[#1B2559]">Trésorerie Revenus</CardTitle>
             </CardHeader>
             <CardContent>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[200px]">Status</TableHead>
-                            <TableHead className="text-right">Amount</TableHead>
+                            <TableHead className="w-[200px]">Statut</TableHead>
+                            <TableHead className="text-right">Montant</TableHead>
                             <TableHead className="text-right">%</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         <TableRow>
                             <TableCell>
-                                <Badge variant="outline" className="bg-yellow-100 text-yellow-700 border-yellow-200 px-3 py-1">
+                                <Badge className="bg-[#FFF6E5] text-[#FFB547] hover:bg-[#FFF6E5] hover:bg-opacity-80 border-none rounded-full px-4 py-1 shadow-none">
                                     À facturer
                                 </Badge>
                             </TableCell>
@@ -54,8 +54,8 @@ export function TreasuryTable() {
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                                <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-200 px-3 py-1">
-                                    Pending Payment
+                                <Badge className="bg-[#EBE6FF] text-[#4318FF] hover:bg-[#EBE6FF] hover:bg-opacity-80 border-none rounded-full px-4 py-1 shadow-none">
+                                    Facturé
                                 </Badge>
                             </TableCell>
                             <TableCell className="text-right font-bold text-[#1B2559]">
@@ -67,8 +67,8 @@ export function TreasuryTable() {
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                                <Badge variant="outline" className="bg-green-100 text-green-700 border-green-200 px-3 py-1">
-                                    Received
+                                <Badge className="bg-[#E6FBF5] text-[#05CD99] hover:bg-[#E6FBF5] hover:bg-opacity-80 border-none rounded-full px-4 py-1 shadow-none">
+                                    Reçu
                                 </Badge>
                             </TableCell>
                             <TableCell className="text-right font-bold text-[#1B2559]">

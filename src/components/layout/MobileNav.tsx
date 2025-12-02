@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { signout } from "@/actions/auth";
-import { ThemeToggle } from "@/components/ThemeToggle";
+
 
 import { NAV_ITEMS } from "@/constants/navigation";
 
@@ -25,7 +25,7 @@ export function MobileNav({ userEmail }: MobileNavProps) {
         <div className="lg:hidden flex items-center justify-between p-4 bg-background sticky top-0 z-50">
             <div className="font-bold text-foreground">The H - Finance</div>
             <div className="flex items-center gap-2">
-                <ThemeToggle />
+
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger asChild>
                         <Button variant="ghost" size="icon">

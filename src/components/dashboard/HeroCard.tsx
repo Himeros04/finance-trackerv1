@@ -26,7 +26,7 @@ export function HeroCard({ transactions }: HeroCardProps) {
     const balance = income - expense;
 
     return (
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-zinc-900 dark:to-zinc-950 rounded-[2.5rem] p-8 relative overflow-hidden h-full flex flex-col justify-between border border-transparent dark:border-border">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-[2.5rem] p-8 relative overflow-hidden h-full flex flex-col justify-between border border-transparent">
             {/* Background decoration could go here */}
 
             <div className="flex justify-between items-start z-10">

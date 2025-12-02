@@ -14,19 +14,19 @@ export function ExpenseTreasuryChart() {
         .reduce((sum, t) => sum + t.amount, 0);
 
     const paid = expenseTransactions
-        .filter(t => t.status === 'Paid')
+        .filter(t => t.status === 'Payé')
         .reduce((sum, t) => sum + t.amount, 0);
 
     const data = [
-        { name: 'À payer', amount: toPay, color: '#FF5757' }, // Red for liabilities
-        { name: 'Paid', amount: paid, color: '#10B981' },   // Green for settled
+        { name: 'À payer', amount: toPay, color: '#FFB547' }, // Orange/Yellow
+        { name: 'Payé', amount: paid, color: '#05CD99' },   // Green
     ];
 
     return (
         <Card className="rounded-[20px] border-none shadow-sm h-full">
             <CardHeader>
-                <CardTitle className="text-xl font-bold text-[#1B2559]">Expense Treasury</CardTitle>
-                <p className="text-sm text-gray-500">Overview of pending vs paid expenses</p>
+                <CardTitle className="text-xl font-bold text-[#1B2559]">Trésorerie Dépenses</CardTitle>
+                <p className="text-sm text-gray-500">Aperçu des dépenses à payer vs payées</p>
             </CardHeader>
             <CardContent>
                 <div className="h-[250px] w-full">
@@ -56,13 +56,13 @@ export function ExpenseTreasuryChart() {
                 <div className="mt-4 flex justify-between items-center px-4">
                     <div>
                         <p className="text-sm text-gray-500">Total À payer</p>
-                        <p className="text-2xl font-bold text-[#FF5757]">
+                        <p className="text-2xl font-bold text-[#FFB547]">
                             {toPay.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                         </p>
                     </div>
                     <div className="text-right">
-                        <p className="text-sm text-gray-500">Total Paid</p>
-                        <p className="text-xl font-bold text-[#10B981]">
+                        <p className="text-sm text-gray-500">Total Payé</p>
+                        <p className="text-xl font-bold text-[#05CD99]">
                             {paid.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                         </p>
                     </div>

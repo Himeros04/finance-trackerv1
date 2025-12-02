@@ -23,17 +23,17 @@ export function IncomeTreasuryChart({ selectedMonth }: IncomeTreasuryChartProps)
         .reduce((sum, t) => sum + t.amount, 0);
 
     const billed = incomeTransactions
-        .filter(t => t.status === 'Billed')
+        .filter(t => t.status === 'Facturé')
         .reduce((sum, t) => sum + t.amount, 0);
 
     const received = incomeTransactions
-        .filter(t => t.status === 'Received')
+        .filter(t => t.status === 'Reçu')
         .reduce((sum, t) => sum + t.amount, 0);
 
     const data = [
         { name: 'À facturer', amount: toBill, color: '#EAB308' }, // Yellow
-        { name: 'Pending', amount: billed, color: '#3B82F6' }, // Blue
-        { name: 'Received', amount: received, color: '#22C55E' }, // Green
+        { name: 'Facturé', amount: billed, color: '#3B82F6' }, // Blue
+        { name: 'Reçu', amount: received, color: '#22C55E' }, // Green
     ];
 
     const total = toBill + billed + received;
@@ -46,8 +46,8 @@ export function IncomeTreasuryChart({ selectedMonth }: IncomeTreasuryChartProps)
     return (
         <Card className="rounded-[20px] border-none shadow-sm h-full">
             <CardHeader>
-                <CardTitle className="text-xl font-bold text-[#1B2559]">Income Treasury</CardTitle>
-                <p className="text-sm text-gray-500">Overview of income status</p>
+                <CardTitle className="text-xl font-bold text-[#1B2559]">Trésorerie Revenus</CardTitle>
+                <p className="text-sm text-gray-500">Aperçu des statuts de revenus</p>
             </CardHeader>
             <CardContent>
                 <div className="h-[250px] w-full">
@@ -82,7 +82,7 @@ export function IncomeTreasuryChart({ selectedMonth }: IncomeTreasuryChartProps)
                 </div>
                 <div className="mt-4 flex justify-end items-center px-4">
                     <div className="text-right">
-                        <p className="text-sm text-gray-500">Total Income</p>
+                        <p className="text-sm text-gray-500">Revenus Totaux</p>
                         <p className="text-2xl font-bold text-[#1B2559]">
                             {total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                         </p>

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+
 
 @theme inline {
   --color-background: var(--background);
@@ -77,47 +77,7 @@
   --sidebar-ring: #4318FF;
 }
 
-.dark {
-  --background: #09090b;
-  /* Zinc 950 */
-  --foreground: #fafafa;
-  /* Zinc 50 */
-  --card: #18181b;
-  /* Zinc 900 */
-  --card-foreground: #fafafa;
-  --popover: #18181b;
-  --popover-foreground: #fafafa;
-  --primary: #4318FF;
-  /* Keep brand color */
-  --primary-foreground: #FFFFFF;
-  --secondary: #27272a;
-  /* Zinc 800 */
-  --secondary-foreground: #fafafa;
-  --muted: #27272a;
-  --muted-foreground: #a1a1aa;
-  /* Zinc 400 */
-  --accent: #27272a;
-  --accent-foreground: #fafafa;
-  --destructive: #991b1b;
-  /* Red 800 */
-  --destructive-foreground: #fafafa;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #d4d4d8;
-  --chart-1: #4318FF;
-  --chart-2: #05CD99;
-  --chart-3: #FFB547;
-  --chart-4: #E60000;
-  --chart-5: #3B82F6;
-  --sidebar: #18181b;
-  --sidebar-foreground: #fafafa;
-  --sidebar-primary: #4318FF;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #27272a;
-  --sidebar-accent-foreground: #fafafa;
-  --sidebar-border: #27272a;
-  --sidebar-ring: #d4d4d8;
-}
+
 
 @layer base {
   * {
@@ -144,4 +104,15 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(156, 163, 175, 0.5);
   border-radius: 20px;
+}
+
+/* Hide number input spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
