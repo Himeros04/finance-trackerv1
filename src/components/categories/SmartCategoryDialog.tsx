@@ -19,6 +19,7 @@ interface SmartCategoryDialogProps {
     defaultType?: 'Income' | 'Expense'
     categoryToEdit?: Category & { targetAmount?: number, color?: string }
     onSuccess?: (category: Category) => void
+    onDelete?: () => void
 }
 
 const categorySchema = z.object({
@@ -32,7 +33,8 @@ export function SmartCategoryDialog({
     onOpenChange,
     defaultType = 'Income',
     categoryToEdit,
-    onSuccess
+    onSuccess,
+    onDelete
 }: SmartCategoryDialogProps) {
     const [name, setName] = useState("")
     const [type, setType] = useState<'Income' | 'Expense'>(defaultType)
@@ -201,7 +203,17 @@ export function SmartCategoryDialog({
                         </div>
                     )}
                 </div>
-                <DialogFooter>
+                <DialogFooter className="gap-2 sm:gap-0">
+                    {categoryToEdit && onDelete && (
+                        <Button
+                            type="button"
+                            variant="destructive"
+                            onClick={onDelete}
+                            className="mr-auto" // Pushes the delete button to the left
+                        >
+                            Delete
+                        </Button>
+                    )}
                     <Button onClick={handleSubmit} disabled={isSubmitting}>
                         {isSubmitting ? (categoryToEdit ? "Updating..." : "Creating...") : (categoryToEdit ? "Update Category" : "Create Category")}
                     </Button>

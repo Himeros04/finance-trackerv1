@@ -119,10 +119,14 @@ export default function SettingsClient({
                         {incomeCategories.map((cat) => {
                             const goal = getGoal(cat.name);
                             return (
-                                <div key={cat.id} className="space-y-2 group">
+                                <div
+                                    key={cat.id}
+                                    className="space-y-2 group cursor-pointer"
+                                    onClick={() => handleEditCategory(cat, goal?.targetAmount, goal?.color)}
+                                >
                                     <div className="flex justify-between items-center">
                                         <Label
-                                            className="font-bold"
+                                            className="font-bold cursor-pointer"
                                             style={{ color: goal?.color || '#1B2559' }}
                                         >
                                             {cat.name}
@@ -132,7 +136,10 @@ export default function SettingsClient({
                                                 variant="ghost"
                                                 size="icon"
                                                 className="h-6 w-6 text-[#A3AED0] hover:text-[#4318FF]"
-                                                onClick={() => handleEditCategory(cat, goal?.targetAmount, goal?.color)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleEditCategory(cat, goal?.targetAmount, goal?.color);
+                                                }}
                                             >
                                                 <Pencil className="h-3 w-3" />
                                             </Button>
@@ -140,7 +147,10 @@ export default function SettingsClient({
                                                 variant="ghost"
                                                 size="icon"
                                                 className="h-6 w-6 text-[#A3AED0] hover:text-red-500"
-                                                onClick={() => confirmDeleteCategory(cat)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    confirmDeleteCategory(cat);
+                                                }}
                                             >
                                                 <Trash2 className="h-3 w-3" />
                                             </Button>
@@ -150,7 +160,7 @@ export default function SettingsClient({
                                         <Input
                                             disabled
                                             defaultValue={goal ? `€ ${goal.targetAmount.toLocaleString()}` : "No Goal Set"}
-                                            className="bg-[#F4F7FE] border-none rounded-xl py-6"
+                                            className="bg-[#F4F7FE] border-none rounded-xl py-6 cursor-pointer"
                                         />
                                     </div>
                                 </div>
@@ -176,15 +186,22 @@ export default function SettingsClient({
                         {expenseCategories.map((cat) => {
                             const budget = getBudget(cat.name);
                             return (
-                                <div key={cat.id} className="space-y-2 group">
+                                <div
+                                    key={cat.id}
+                                    className="space-y-2 group cursor-pointer"
+                                    onClick={() => handleEditCategory(cat, budget?.amount)}
+                                >
                                     <div className="flex justify-between items-center">
-                                        <Label className="text-[#A3AED0]">{cat.name}</Label>
+                                        <Label className="text-[#A3AED0] cursor-pointer">{cat.name}</Label>
                                         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <Button
                                                 variant="ghost"
                                                 size="icon"
                                                 className="h-6 w-6 text-[#A3AED0] hover:text-[#4318FF]"
-                                                onClick={() => handleEditCategory(cat, budget?.amount)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleEditCategory(cat, budget?.amount);
+                                                }}
                                             >
                                                 <Pencil className="h-3 w-3" />
                                             </Button>
@@ -192,7 +209,10 @@ export default function SettingsClient({
                                                 variant="ghost"
                                                 size="icon"
                                                 className="h-6 w-6 text-[#A3AED0] hover:text-red-500"
-                                                onClick={() => confirmDeleteCategory(cat)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    confirmDeleteCategory(cat);
+                                                }}
                                             >
                                                 <Trash2 className="h-3 w-3" />
                                             </Button>
@@ -201,7 +221,7 @@ export default function SettingsClient({
                                     <Input
                                         disabled
                                         defaultValue={budget ? `€ ${budget.amount.toLocaleString()}` : "No Limit Set"}
-                                        className="bg-[#F4F7FE] border-none rounded-xl py-6"
+                                        className="bg-[#F4F7FE] border-none rounded-xl py-6 cursor-pointer"
                                     />
                                 </div>
                             );
@@ -260,6 +280,13 @@ export default function SettingsClient({
                 onOpenChange={setIsEditCategoryOpen}
                 categoryToEdit={categoryToEdit}
                 defaultType={categoryToEdit?.type}
+                onDelete={() => {
+                    if (categoryToEdit) {
+                        setIsEditCategoryOpen(false);
+                        // Small timeout to allow the previous dialog to transition out smoothly
+                        setTimeout(() => confirmDeleteCategory(categoryToEdit), 100);
+                    }
+                }}
             />
 
             {/* Delete Confirmation Dialog */}
